@@ -9,3 +9,8 @@ OpenList 本地程序版本
 [Go](https://go.dev/)  
 [wailsv2](https://wails.io/)  
 [react](https://react.dev/)  
+
+# ToDo  
+- [ ] 兼容OpenList插件生态
+- [ ] 兼容OpenList主题生态
+- [ ] 兼容并同步OpenList发布版本
