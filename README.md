@@ -1,5 +1,5 @@
-# OpenListGUI
-OpenList 本地程序版本
+# OShin 
+OpenList 原生本地程序版本
 
 # 须知  
 当前项目为预启动项目 不会过快进入开发日程  
