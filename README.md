@@ -1,14 +1,9 @@
 <div align="center">
-    <h1>OShin</h1>
-</div>
-
-<div align="center">
+  <h1>OShin</h1>
   <h3>基于<a href="https://github.com/OpenListTeam/OpenList">OpenList</a>二次开发的桌面程序</h3>
+  <img src="preview.png" width="100%" alt="preview" />
+  <p><em>图源：<a href="https://www.pixiv.net/artworks/102983717" target="_blank">アナ</a></em></p>
 </div>
-
-![](preview.png)
-
-图: [アナ](https://www.pixiv.net/artworks/102983717)
 
 ---
 
