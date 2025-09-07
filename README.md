@@ -38,7 +38,7 @@
 
 ---
 
-## 📄 开源许可
+### 📄 开源许可
 [AGPLv3.0](https://www.gnu.org/licenses/agpl-3.0.html)
 
 ---
