@@ -1,20 +1,46 @@
-# OShin 
-OpenList 原生本地程序版本
+<div align="center">
+    <h1>OShin</h1>
+</div>
 
-# 须知  
-当前项目为预启动项目 不会过快进入开发日程  
-如果你也希望加入到开发中请与我联系[@KinhWeb](https://t.me/kinhweb)  
+<div align="center">
+  <h3>基于<a href="https://github.com/OpenListTeam/OpenList">OpenList</a>二次开发的桌面程序</h3>
+</div>
 
-关于与官方提供的 ``openlist-desktop`` 差异：  
-本项目将直接基于``openlist``项目并继承其AGPLv3.0许可开源,使用Wailsv2替换原有Gin提供本地化Openlist而非类似官方与其他程序使用API交互的方式提供本地版本.   
-因此本项目还将兼容完整的原生OpenList插件与主题生态.  
+![](preview.png)
 
-# 技术栈 
-[Go](https://go.dev/)  
-[wailsv2](https://wails.io/)  
-[react](https://react.dev/)  
+图: [アナ](https://www.pixiv.net/artworks/102983717)
 
-# ToDo  
-- [ ] 兼容OpenList插件生态
-- [ ] 兼容OpenList主题生态
-- [ ] 兼容并同步OpenList发布版本
+---
+
+### 📄 须知  
+> 当前项目为**预启动项目**，不会过快进入开发日程。  
+> 如果你也希望加入开发，请加入我们的群组：[@KinhWeb](https://t.me/kinhweb)
+
+---
+
+### 🔧 与官方 `openlist-desktop` 的差异  
+本项目**直接基于 [openlist](https://github.com/openlist) 项目**并继承其 [AGPLv3.0 许可证](https://www.gnu.org/licenses/agpl-3.0.html)。  
+不同于官方或其他实现通过 API 交互的方式提供本地化版本，本项目将使用 [Wails v2](https://wails.io) 替换原有的 [Gin](https://github.com/gin-gonic/gin) 框架，**在本地直接运行完整的 OpenList 服务**。
+
+这将带来以下优势：
+- 全功能本地化体验
+- 完整支持 OpenList 插件与主题生态
+- 更加贴近原生桌面应用的性能与交互
+
+---
+
+### ⚙️ 技术栈
+- 🐹 [Go](https://go.dev/)
+- 🖥️ [Wails v2](https://wails.io/)
+- 💙 [React](https://react.dev/)
+
+---
+
+### ✅ 待办事项（ToDo）
+- [ ] 兼容 OpenList 插件生态  
+- [ ] 兼容 OpenList 主题生态  
+- [ ] 兼容并同步 OpenList 官方发布版本  
+
+---
+
+*这是一个正在开发中的开源项目，我们欢迎所有有志之士加入共建！*
