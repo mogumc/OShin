@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { Box, Typography, IconButton } from '@mui/material'
 import { Minimize as MinimizeIcon, CropSquare as MaximizeIcon, Close as CloseIcon, Language as LanguageIcon } from '@mui/icons-material'
 import { windowMinimise, windowToggleMaximise, windowClose } from '../api/app'
@@ -13,9 +14,14 @@ interface TitleBarProps {
 export default function TitleBar({ title, lang, availableLangs, onLangClick }: TitleBarProps) {
   const currentLangName = availableLangs?.find((l) => l.language_code === lang)?.language_name || lang || ''
 
+  const handleDoubleClick = useCallback(() => {
+    windowToggleMaximise()
+  }, [])
+
   return (
     <Box
       className="titlebar"
+      onDoubleClick={handleDoubleClick}
       sx={{
         display: 'flex',
         alignItems: 'center',

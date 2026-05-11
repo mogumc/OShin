@@ -12,9 +12,10 @@ interface LangSelectorProps {
   currentLang: string
   availableLangs: LanguageInfo[]
   onSelect: (langCode: string) => void
+  t: (key: string, fallback?: string) => string
 }
 
-export default function LangSelector({ open, onClose, currentLang, availableLangs, onSelect }: LangSelectorProps) {
+export default function LangSelector({ open, onClose, currentLang, availableLangs, onSelect, t }: LangSelectorProps) {
   const [selected, setSelected] = useState(currentLang)
 
   const handleConfirm = () => {
@@ -24,7 +25,7 @@ export default function LangSelector({ open, onClose, currentLang, availableLang
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
-      <DialogTitle>选择语言</DialogTitle>
+      <DialogTitle>{t('select_lang', '选择语言')}</DialogTitle>
       <DialogContent dividers>
         <List>
           {availableLangs.map((lang) => (
@@ -42,14 +43,14 @@ export default function LangSelector({ open, onClose, currentLang, availableLang
           ))}
           {availableLangs.length === 0 && (
             <ListItem>
-              <ListItemText primary="无可用语言选项" />
+              <ListItemText primary={t('no_lang_available', '无可用语言选项')} />
             </ListItem>
           )}
         </List>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>取消</Button>
-        <Button onClick={handleConfirm} variant="contained">确认</Button>
+        <Button onClick={onClose}>{t('cancel', '取消')}</Button>
+        <Button onClick={handleConfirm} variant="contained">{t('confirm', '确认')}</Button>
       </DialogActions>
     </Dialog>
   )

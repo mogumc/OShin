@@ -63,6 +63,7 @@ function App() {
           currentLang={lang}
           availableLangs={availableLangs}
           onSelect={switchLang}
+          t={t}
         />
       </Box>
     </ThemeProvider>

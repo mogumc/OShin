@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import {
   Box, Paper, Typography, FormControl, InputLabel, Select, MenuItem,
-  Alert, Chip, ChipProps
+  Chip, ChipProps
 } from '@mui/material'
 import { Settings as SettingsIcon } from '@mui/icons-material'
 import { getLogLevel, setLogLevel } from '../api/app'
@@ -20,7 +20,6 @@ interface SettingsPageProps {
 
 export default function SettingsPage({ t }: SettingsPageProps) {
   const [logLevel, setLogLevelState] = useState('DEBUG')
-  const [alertMsg, setAlertMsg] = useState<{ type: 'success' | 'error' | 'info'; msg: string } | null>(null)
 
   useEffect(() => {
     const load = async () => {
@@ -32,30 +31,29 @@ export default function SettingsPage({ t }: SettingsPageProps) {
       }
     }
     load()
-  }, [])
+  }, [t])
 
   const handleLogLevelChange = useCallback(async (newLevel: string) => {
     try {
       await setLogLevel(newLevel)
       setLogLevelState(newLevel)
-      setAlertMsg({ type: 'success', msg: `日志等级已设置为 ${newLevel}` })
     } catch (e) {
-      setAlertMsg({ type: 'error', msg: String(e) })
+      console.error('Failed to set log level:', e)
     }
   }, [])
 
   const logLevels = ['DEBUG', 'INFO', 'WARN', 'ERROR']
 
   return (
-    <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', px: 2, py: 3, overflow: 'auto' }}>
-      <Paper sx={{ p: 3, maxWidth: 500, width: '100%' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+    <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', px: 2, py: 3, overflow: 'auto' }}>
+      <Paper sx={{ p: 3, width: '100%', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
           <SettingsIcon color="primary" sx={{ mr: 1, fontSize: 22 }} />
           <Typography variant="h6" fontWeight={600}>{t('settings', '设置')}</Typography>
         </Box>
 
         {/* Log Level */}
-        <Box sx={{ mb: 2 }}>
+        <Box sx={{ mb: 3 }}>
           <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
             {t('demo_log_level', '日志等级设置')}
           </Typography>
@@ -80,19 +78,13 @@ export default function SettingsPage({ t }: SettingsPageProps) {
               </Select>
             </FormControl>
             <Typography variant="body2" color="text.secondary">
-              当前：<Chip label={logLevel} size="small" color={getLogLevelColor(logLevel)} />
+              {t('current', '当前')}：<Chip label={logLevel} size="small" color={getLogLevelColor(logLevel)} />
             </Typography>
           </Box>
         </Box>
 
-        {alertMsg && (
-          <Alert severity={alertMsg.type} sx={{ mt: 1 }} onClose={() => setAlertMsg(null)}>
-            {alertMsg.msg}
-          </Alert>
-        )}
-
         {/* About */}
-        <Box sx={{ mt: 3, pt: 2, borderTop: 1, borderColor: 'divider' }}>
+        <Box sx={{ mt: 'auto', pt: 2, borderTop: 1, borderColor: 'divider' }}>
           <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 0.5 }}>
             {t('about', '关于')}
           </Typography>

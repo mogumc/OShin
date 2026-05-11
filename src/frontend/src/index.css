@@ -19,9 +19,20 @@ body {
 
 /* Wails frameless window drag region */
 .titlebar {
-  -webkit-app-region: drag;
+  --wails-draggable: drag;
 }
 
 .no-drag {
-  -webkit-app-region: no-drag;
+  --wails-draggable: no-drag;
+}
+
+/* 隐藏滚动条但保留滚动功能 */
+.scroll-hidden {
+  overflow: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }

@@ -113,7 +113,7 @@ export default function HomePage({ t }: HomePageProps) {
       </Drawer>
 
       {/* Right Content - File Browser */}
-      <Box sx={{ flexGrow: 1, overflow: 'auto', p: 2 }}>
+      <Box sx={{ flexGrow: 1, overflow: 'hidden', p: 2, display: 'flex', flexDirection: 'column' }}>
         <Paper sx={{ p: 2, mb: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
             {currentPath.length > 0 && (
@@ -130,8 +130,8 @@ export default function HomePage({ t }: HomePageProps) {
           </Typography>
         </Paper>
 
-        <Paper variant="outlined">
-          <List disablePadding>
+        <Paper variant="outlined" sx={{ flexGrow: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+          <List disablePadding className="scroll-hidden" sx={{ flexGrow: 1, overflow: 'auto' }}>
             {mockFiles.map((file, index) => (
               <ListItem key={file.name} disablePadding>
                 <ListItemButton
