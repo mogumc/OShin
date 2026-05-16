@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { Box, Tabs, Tab, useMediaQuery } from '@mui/material'
-import { Home as HomeIcon, Extension as PluginIcon, Settings as SettingsIcon } from '@mui/icons-material'
+import { Home as HomeIcon, CloudDownload as DownloadIcon, Extension as PluginIcon, Settings as SettingsIcon } from '@mui/icons-material'
 import TitleBar from './components/TitleBar'
 import HomePage from './components/HomePage'
+import DownloadPage from './components/DownloadPage'
 import PluginPage from './components/PluginPage'
 import SettingsPage from './components/SettingsPage'
 import LangSelector from './components/LangSelector'
@@ -40,8 +41,9 @@ function App() {
 
         <Box sx={{ flex: 1, minHeight: 0, overflow: 'hidden', bgcolor: 'background.default' }}>
           {activeTab === 0 && <HomePage t={t} />}
-          {activeTab === 1 && <PluginPage t={t} />}
-          {activeTab === 2 && <SettingsPage t={t} />}
+          {activeTab === 1 && <DownloadPage t={t} />}
+          {activeTab === 2 && <PluginPage t={t} />}
+          {activeTab === 3 && <SettingsPage t={t} />}
         </Box>
 
         <Box sx={{ borderTop: 1, borderColor: 'divider', bgcolor: 'background.paper', flexShrink: 0 }}>
@@ -52,6 +54,7 @@ function App() {
             sx={{ minHeight: 48 }}
           >
             <Tab icon={<HomeIcon />} iconPosition="start" label={t('menu_main', '首页')} sx={{ minHeight: 48 }} />
+            <Tab icon={<DownloadIcon />} iconPosition="start" label={t('menu_downloads', '下载列表')} sx={{ minHeight: 48 }} />
             <Tab icon={<PluginIcon />} iconPosition="start" label={t('menu_plugin', '插件')} sx={{ minHeight: 48 }} />
             <Tab icon={<SettingsIcon />} iconPosition="start" label={t('menu_setting', '设置')} sx={{ minHeight: 48 }} />
           </Tabs>
