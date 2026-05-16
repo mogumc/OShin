@@ -470,7 +470,6 @@ export default function HomePage({ t }: HomePageProps) {
         </Tabs>
 
         {homeTab === 0 && (
-        {homeTab === 0 && (
           <>
             {!selectedTemplate ? (
               <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

@@ -204,7 +204,6 @@ const fallbackTextMap: Record<string, Record<string, string>> = {
     capabilities_label: '能力:',
     no_capabilities: '无',
     create_plugin_group_title: '创建插件用户组',
-    perm_grant_hint: '授予权限后，插件将能够执行相应操作。请确认您信任该插件。',
     account_placeholder_local: '例如: 工作文档',
     account_placeholder_plugin: '例如: 我的百度网盘',
     read_failed: '读取失败',
