@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
-	"path/filepath"
+	Pa "path"
 )
 
 func Init() {
@@ -22,21 +22,17 @@ func Init() {
 		}
 	}
 
-	// 2. 初始化配置（config.ini）
 	if err := InitConfig(); err != nil {
 		fmt.Printf("配置初始化失败: %v\n", err)
 	}
 
-	// 3. 初始化数据库
 	if err := InitDB(); err != nil {
 		fmt.Printf("数据库初始化失败: %v\n", err)
 	}
 
-	// 4. 初始化日志（必须在 config 之后，因为日志目录来自配置）
 	InitLogger()
 	Log.Info("日志系统初始化完成")
 
-	// 5. 初始化语言
 	InitLang()
 	Log.Infof("语言系统初始化完成，当前语言: %s", useLangPath)
 }
@@ -51,7 +47,7 @@ func GetLangTextMap() map[string]string {
 }
 
 func GetLangPack() (*LanguagePack, error) {
-	langPath := filepath.Join(pathLang, useLangPath)
+	langPath := Pa.Join(pathLang, useLangPath)
 
 	if cached, ok := langPackCache[langPath]; ok {
 		return cached, nil
@@ -65,7 +61,7 @@ func GetLangPack() (*LanguagePack, error) {
 		return pack, err
 	}
 
-	embedPath := filepath.Join("Lang", useLangPath)
+	embedPath := Pa.Join("lang", useLangPath)
 	pack, err := tryLoadLangPackFromEmbed(embedPath)
 	if err == nil {
 		langPackCache[langPath] = pack
@@ -74,7 +70,7 @@ func GetLangPack() (*LanguagePack, error) {
 }
 
 func tryLoadLangPack(langPath string) (*LanguagePack, error) {
-	infoPath := filepath.Join(langPath, "info.json")
+	infoPath := Pa.Join(langPath, "info.json")
 	infoData, err := os.ReadFile(infoPath)
 	if err != nil {
 		return nil, err
@@ -85,7 +81,7 @@ func tryLoadLangPack(langPath string) (*LanguagePack, error) {
 		return nil, err
 	}
 
-	textmapPath := filepath.Join(langPath, "textmap.json")
+	textmapPath := Pa.Join(langPath, "textmap.json")
 	textmapData, err := os.ReadFile(textmapPath)
 	if err != nil {
 		return nil, fmt.Errorf("读取 textmap.json 失败: %v", err)
@@ -107,18 +103,20 @@ func tryLoadLangPackFromEmbed(langPath string) (*LanguagePack, error) {
 		return nil, fmt.Errorf("嵌入的文件系统未初始化")
 	}
 
-	infoPath := filepath.Join(langPath, "info.json")
+	infoPath := Pa.Join(langPath, "info.json")
 	infoData, err := fs.ReadFile(LangFS, infoPath)
 	if err != nil {
+		Log.Warnf("读取嵌入 info.json 失败: %v", err)
 		return nil, err
 	}
 
 	var langInfo LanguageInfo
 	if err := json.Unmarshal(infoData, &langInfo); err != nil {
+		Log.Warnf("解析嵌入 info.json 失败: %v", err)
 		return nil, err
 	}
 
-	textmapPath := filepath.Join(langPath, "textmap.json")
+	textmapPath := Pa.Join(langPath, "textmap.json")
 	textmapData, err := fs.ReadFile(LangFS, textmapPath)
 	if err != nil {
 		return nil, fmt.Errorf("读取嵌入 textmap.json 失败: %v", err)

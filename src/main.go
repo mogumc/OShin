@@ -13,7 +13,7 @@ import (
 //go:embed all:frontend/dist
 var assets embed.FS
 
-//go:embed Lang/*
+//go:embed all:lang
 var langFS embed.FS
 
 func main() {

@@ -4,16 +4,17 @@ import (
 	"encoding/json"
 	"io/fs"
 	"os"
+	Pa "path"
 	"path/filepath"
 )
 
 var (
-	pathLang       = "Lang/"
-	useLangPath    = "default"
-	allLangInfo    = []LanguageInfo{}
-	LangFS         fs.FS
-	langPackCache  = map[string]*LanguagePack{}
-	langCodeToDir  = map[string]string{}
+	pathLang      = "lang/"
+	useLangPath   = "default"
+	allLangInfo   = []LanguageInfo{}
+	LangFS        fs.FS
+	langPackCache = map[string]*LanguagePack{}
+	langCodeToDir = map[string]string{}
 )
 
 type LanguageInfo struct {
@@ -63,16 +64,19 @@ func scanFileSystemLangs(langDirMap map[string]string) {
 		return loadLangInfoFromFile(path, langDirMap, "[文件系统]")
 	})
 	if err != nil {
-		Log.Warnf("遍历文件系统 Lang 目录出错: %v", err)
+		Log.Warnf("遍历文件系统 lang 目录出错: %v", err)
 	}
 }
 
 func scanEmbeddedLangs(langDirMap map[string]string) {
 	if LangFS == nil {
+		Log.Warnf("读取语言文件夹失败: %v", "LangFS 为空")
 		return
 	}
-	entries, err := fs.ReadDir(LangFS, "Lang")
+
+	entries, err := fs.ReadDir(LangFS, "lang")
 	if err != nil {
+		Log.Warnf("读取语言文件夹失败: %v", err)
 		return
 	}
 	for _, entry := range entries {
@@ -84,29 +88,33 @@ func scanEmbeddedLangs(langDirMap map[string]string) {
 }
 
 func loadLangInfoFromFile(path string, langDirMap map[string]string, source string) error {
-	infoPath := filepath.Join(path, "info.json")
+	infoPath := Pa.Join(path, "info.json")
 	data, err := os.ReadFile(infoPath)
 	if err != nil {
+		Log.Warnf("读取语言文件夹失败: %v", err)
 		return nil
 	}
 	return parseAndAddLangInfo(data, filepath.Base(path), langDirMap, source)
 }
 
-func loadLangInfoFromEmbed(dirName string, langDirMap map[string]string, source string) {
-	infoPath := filepath.Join("Lang", dirName, "info.json")
+func loadLangInfoFromEmbed(path string, langDirMap map[string]string, source string) {
+	infoPath := Pa.Join("lang", path, "info.json")
 	data, err := fs.ReadFile(LangFS, infoPath)
 	if err != nil {
+		Log.Warnf("读取语言文件夹失败: %v", err)
 		return
 	}
-	parseAndAddLangInfo(data, dirName, langDirMap, source)
+	parseAndAddLangInfo(data, filepath.Base(path), langDirMap, source)
 }
 
 func parseAndAddLangInfo(data []byte, dirName string, langDirMap map[string]string, source string) error {
 	var info LanguageInfo
 	if err := json.Unmarshal(data, &info); err != nil {
+		Log.Warnf("解析语言文件夹失败: %v", err)
 		return nil
 	}
 	if info.LanguageCode == "" || info.TextmapPath == "" {
+		Log.Warnf("语言信息不完整: %s", dirName)
 		return nil
 	}
 	if !containsLang(allLangInfo, info.LanguageCode) {

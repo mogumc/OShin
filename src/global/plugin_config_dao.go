@@ -113,11 +113,6 @@ func GetAllPluginConfigs() (map[string]map[string]interface{}, error) {
 		result[pluginID] = config
 	}
 
-	// 确保返回非 nil map
-	if result == nil {
-		result = make(map[string]map[string]interface{})
-	}
-
 	return result, nil
 }
 
