@@ -57,3 +57,8 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+.codebuddy/
+.workbuddy/
+
+# OShin
+user/
