@@ -9,9 +9,12 @@ import (
 )
 
 func Init() {
+	// 1. 创建必要目录
 	dirs := []string{
-		"Lang",
+		"lang",
 		GlobalConfig.LogDir,
+		"user",
+		"user/plugins",
 	}
 	for _, dir := range dirs {
 		if _, err := os.Stat(dir); os.IsNotExist(err) {
@@ -19,9 +22,21 @@ func Init() {
 		}
 	}
 
+	// 2. 初始化配置（config.ini）
+	if err := InitConfig(); err != nil {
+		fmt.Printf("配置初始化失败: %v\n", err)
+	}
+
+	// 3. 初始化数据库
+	if err := InitDB(); err != nil {
+		fmt.Printf("数据库初始化失败: %v\n", err)
+	}
+
+	// 4. 初始化日志（必须在 config 之后，因为日志目录来自配置）
 	InitLogger()
 	Log.Info("日志系统初始化完成")
 
+	// 5. 初始化语言
 	InitLang()
 	Log.Infof("语言系统初始化完成，当前语言: %s", useLangPath)
 }
@@ -49,7 +64,7 @@ func GetLangPack() (*LanguagePack, error) {
 		}
 		return pack, err
 	}
-	
+
 	embedPath := filepath.Join("Lang", useLangPath)
 	pack, err := tryLoadLangPackFromEmbed(embedPath)
 	if err == nil {
